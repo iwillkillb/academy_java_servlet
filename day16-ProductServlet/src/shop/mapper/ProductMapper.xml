@@ -19,7 +19,7 @@
                , p.PRICE
                , p.QUANTITY
           FROM product p
-         WHERE p.PRODCODE = ?
+         WHERE p.PRODCODE = #{prodCode}
     </select>
     
     <update id="update" parameterType="Product">

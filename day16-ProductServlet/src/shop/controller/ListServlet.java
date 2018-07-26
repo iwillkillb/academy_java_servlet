@@ -5,6 +5,7 @@ import static shop.factory.WarehouseFactory.getWarehouse;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,33 +22,33 @@ import shop.vo.Product;
 public class ListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doGet(HttpServletRequest request
+			           , HttpServletResponse response) 
+			        		   throws ServletException, IOException {
 		// 1. 한글설정
 		// (1) 요청 설정
 		request.setCharacterEncoding("utf-8");
-		// (2) 응답은 JSP설정에서 담당할 것이므로 불필요
+		// (2) 응답 설정
+		//     응답은 JSP 에서 담당할 것이므로 불필요
 		
 		// 2. 조회에 필요한 객체 선언
 		GeneralWarehouse warehouse;
 		warehouse = getWarehouse("mybatis");
 		
-		// 3. 조회 결과를 request에 속성으로 추가
+		// 3. 조회 결과를 request 에 속성으로 추가
 		List<Product> products = warehouse.getAllProducts();
 		request.setAttribute("products", products);
 		
-		// 4. 조회 결과가 추가된 request를 적절한 목록뷰(list.jsp)로 전달(페이지 이동)
+		// 4. 조회 결과가 추가된 request 를
+		//    적절한 목록 뷰(list.jsp)로 전달(페이지 이동)
+		String view = "listJsp";
+		RequestDispatcher reqd;
+		reqd = request.getRequestDispatcher(view);
 		
+		reqd.forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

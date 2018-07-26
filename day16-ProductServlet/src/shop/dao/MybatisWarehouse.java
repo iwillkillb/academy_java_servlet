@@ -137,7 +137,7 @@ public class MybatisWarehouse implements GeneralWarehouse {
 		List<Product> products = null;
 		
 		try {
-			mapper.selectAll();
+			products = mapper.selectAll();
 		} finally {
 			if (session != null)
 				session.close();
